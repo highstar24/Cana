@@ -3,62 +3,217 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>카나프테라퓨틱스 카드뉴스 (가로형)</title>
+<title>카나프테라퓨틱스 카드뉴스</title>
 <style>
 @font-face {
     font-family: 'Paperlogy';
     src: url('https://cdn.jsdelivr.net/gh/highstar24/fonts@main/Paperlogy-Regular.woff2') format('woff2');
 }
+
+/* 팝아트 스타일 색상 팔레트 지정 */
 :root {
-  --purple: #5D5491; --lilac: #D2C7FF; --dark: #2E2A50; --neon: #E1FB62; --yellow: #FFD230;
+  /* 이미지 참고 팔레트 (오렌지, 블루, 그린, 퍼플) */
+  --bg-orange: #FF9B54;
+  --text-purple-on-orange: #8B5FDF;
+
+  --bg-blue: #4A72C9;
+  --text-green-on-blue: #B3E879;
+
+  --bg-green: #C5E98B;
+  --text-blue-on-green: #4A6BC6;
+
+  --bg-purple: #9A5DE2;
+  --text-orange-on-purple: #FA9A4E;
+
+  --dark: #2E2A50;
+  --white: #FFFFFF;
 }
+
 body {
   font-family: 'Paperlogy', sans-serif;
-  margin: 0; padding: 0;
-  background-color: var(--dark);
-  color: white;
+  margin: 0; 
+  padding: 0;
+  background-color: #111;
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 }
+
+/* 스크롤바 숨기기 */
+body::-webkit-scrollbar { display: none; }
+body { -ms-overflow-style: none; scrollbar-width: none; }
+
 .card {
-  min-width: 100vw;
+  flex: 0 0 100vw;
   height: 100vh;
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 8vw;
   box-sizing: border-box;
-  background: var(--purple);
-  border-right: 2px solid var(--dark);
   text-align: center;
+  position: relative;
 }
-.logo { width: 120px; margin-bottom: 20px; }
-h1 { color: var(--neon); margin-bottom: 10px; font-size: 2.5rem; }
-h2 { color: var(--yellow); margin-bottom: 20px; font-size: 1.8rem; }
-p { font-size: 1.2rem; line-height: 1.6; color: var(--lilac); }
+
+/* 카드별 배경 및 글자색 조합 (팝아트 느낌) */
+.card-1 {
+  background-color: var(--bg-orange);
+  color: var(--text-purple-on-orange);
+}
+.card-2 {
+  background-color: var(--bg-blue);
+  color: var(--text-green-on-blue);
+}
+.card-3 {
+  background-color: var(--bg-green);
+  color: var(--text-blue-on-green);
+}
+.card-4 {
+  background-color: var(--bg-purple);
+  color: var(--text-orange-on-purple);
+}
+.card-5 {
+  background-color: var(--dark);
+  color: var(--white);
+}
+
+.logo { 
+  width: 60px; 
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  opacity: 0.8;
+}
+
+.category {
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  border: 2px solid currentColor;
+  padding: 5px 15px;
+  border-radius: 20px;
+}
+
+h1 { 
+  margin: 0 0 20px 0; 
+  font-size: 2.8rem; 
+  line-height: 1.3;
+  word-break: keep-all;
+}
+
+.highlight {
+  background-color: currentColor;
+  padding: 2px 10px;
+}
+.card-1 .highlight { color: var(--bg-orange); }
+.card-2 .highlight { color: var(--bg-blue); }
+.card-3 .highlight { color: var(--bg-green); }
+.card-4 .highlight { color: var(--bg-purple); }
+
+p { 
+  font-size: 1.2rem; 
+  line-height: 1.6; 
+  margin-top: 10px;
+  opacity: 0.9;
+  font-weight: 500;
+  color: var(--dark); /* 가독성을 위해 본문은 진한 톤으로 통일 */
+}
+.card-5 p { color: #ccc; }
+
+/* 팝아트적인 장식 요소 */
+.decoration {
+  position: absolute;
+  font-size: 10rem;
+  opacity: 0.1;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.content-wrapper {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.swipe-hint {
+  position: absolute;
+  bottom: 30px;
+  font-size: 0.9rem;
+  opacity: 0.6;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {transform: translateX(0);}
+  40% {transform: translateX(10px);}
+  60% {transform: translateX(5px);}
+}
 </style>
 </head>
 <body>
-  <div class="card">
+
+  <!-- Card 1 -->
+  <div class="card card-1">
     <img src="https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png" class="logo" alt="Logo">
-    <h1>카나프테라퓨틱스 상장</h1>
-    <h2>상장 첫날 153% 급등!</h2>
-    <p>공모가 20,000원에서 50,600원으로 마감하며<br>성공적인 코스닥 데뷔를 마쳤습니다.</p>
+    <div class="decoration" style="right: -20px; top: 10%;">📈</div>
+    <div class="content-wrapper">
+      <div class="category">ISSUE CHECK</div>
+      <h1>카나프테라퓨틱스<br><span class="highlight">주가 급락?</span></h1>
+      <p>최고점 6.9만 원에서 4만 원대 하락.<br>단기 실망감 속, 진짜 가치는 어디에 있을까?</p>
+    </div>
+    <div class="swipe-hint" style="color: var(--text-purple-on-orange);">Swipe ➔</div>
   </div>
-  <div class="card">
+
+  <!-- Card 2 -->
+  <div class="card card-2">
     <img src="https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png" class="logo" alt="Logo">
-    <h1>핵심 투자 포인트</h1>
-    <h2>이중항체, ADC 등 7개 파이프라인</h2>
-    <p>인간 유전체 데이터 분석 기반의<br>신약 개발 플랫폼으로 경쟁력을 확보했습니다.</p>
+    <div class="decoration" style="left: 0; bottom: 10%;">🔬</div>
+    <div class="content-wrapper">
+      <div class="category">PIPELINE 1</div>
+      <h1><span class="highlight">5월 FDA 임상</span><br>KNP-502</h1>
+      <p>종양 미세환경 개선 면역항암제.<br>2025년 5월, 1상 IND 신청이 강력한 모멘텀!</p>
+    </div>
+    <div class="swipe-hint" style="color: var(--text-green-on-blue);">Swipe ➔</div>
   </div>
-  <div class="card">
+
+  <!-- Card 3 -->
+  <div class="card card-3">
     <img src="https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png" class="logo" alt="Logo">
-    <h1>향후 전망</h1>
-    <h2>2028년 흑자 전환 목표</h2>
-    <p>매년 1건 이상의 임상 진입 및 기술이전 성과로<br>글로벌 혁신 신약 기업으로 도약합니다.</p>
+    <div class="decoration" style="right: 10%; top: 20%;">📊</div>
+    <div class="content-wrapper">
+      <div class="category">PIPELINE 2</div>
+      <h1>글로벌 학회<br><span class="highlight">데이터 발표</span></h1>
+      <p>4월 AACR (차세대 면역항암제)<br>5월 ARVO (안과 질환 치료제)<br>라이선스 아웃의 신호탄!</p>
+    </div>
+    <div class="swipe-hint" style="color: var(--text-blue-on-green);">Swipe ➔</div>
   </div>
+
+  <!-- Card 4 -->
+  <div class="card card-4">
+    <img src="https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png" class="logo" alt="Logo">
+    <div class="decoration" style="left: -10px; top: 30%;">💊</div>
+    <div class="content-wrapper">
+      <div class="category">NEXT GEN</div>
+      <h1>빅파마가 노리는<br><span class="highlight">ADC KNP-701</span></h1>
+      <p>cMET x EGFR 이중항체 ADC.<br>기존 표적항암제 내성을 극복할 폭발적 잠재력.</p>
+    </div>
+    <div class="swipe-hint" style="color: var(--text-orange-on-purple);">Swipe ➔</div>
+  </div>
+
+  <!-- Card 5 -->
+  <div class="card card-5">
+    <img src="https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png" class="logo" alt="Logo">
+    <div class="content-wrapper">
+      <div class="category" style="color: var(--bg-orange); border-color: var(--bg-orange);">CONCLUSION</div>
+      <h1 style="color: var(--white);">수급보단<br><span class="highlight" style="background-color: var(--bg-orange); color: var(--dark);">마일스톤</span></h1>
+      <p style="color: #ccc;">단기 적자는 신약 개발의 숙명.<br>올해 예고된 임상 및 학회 일정 달성 여부가<br>주가 반등의 진짜 열쇠입니다.</p>
+    </div>
+  </div>
+
 </body>
 </html>
